@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace SerapisPatient.CustomRenderer
 {
-    public class DynamicEditor:Editor
+    public class DynamicEditor : Editor
     {
         public DynamicEditor()
         {

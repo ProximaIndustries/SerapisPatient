@@ -313,7 +313,7 @@
 
                     <Label 
                         HorizontalOptions="Center" 
-                        FontSize="Large"
+                        FontSize="Small"
                         Text="{Binding NextAppointment, StringFormat='Next appointment: {0}'}"
                         Margin="0,0,0,6"
                         >

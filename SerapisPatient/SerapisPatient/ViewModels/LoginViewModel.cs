@@ -60,7 +60,6 @@ namespace SerapisPatient.ViewModels
         public FacebookProfile Profile { get; set; }
 
         public Command OnLoginCommand { get; set; }
-        public Command OnShareDataCommand { get; set; }
         public Command OnLoadDataCommand { get; set; }
         public Command OnLogoutCommand { get; set; }
         #endregion
@@ -71,7 +70,7 @@ namespace SerapisPatient.ViewModels
             Profile = new FacebookProfile();
 
             OnLoginCommand = new Command(async () => await FacebookLoginAsync());
-            OnShareDataCommand = new Command(async () => await FacebookShareDataAsync());
+           
             OnLoadDataCommand = new Command(async () => await FacebookLoadData());
             OnLogoutCommand = new Command(() =>
             {
@@ -215,12 +214,7 @@ namespace SerapisPatient.ViewModels
 
         }
 
-        async Task FacebookShareDataAsync()
-        {
-            FacebookShareLinkContent linkContent = new FacebookShareLinkContent("Awesome team of developers, making the world a better place one project or plugin at the time!",
-                                                                                new Uri("http://www.github.com/crossgeeks"));
-            var ret = await CrossFacebookClient.Current.ShareAsync(linkContent);
-        }
+        
 
         public async Task FacebookLoadData()
         {
@@ -233,12 +227,13 @@ namespace SerapisPatient.ViewModels
             var data = JObject.Parse(jsonData.Data);
             Profile = new FacebookProfile()
             {
+                SocialID = data["id"].ToString(),
                 FullName = data["name"].ToString(),
                 Picture = new UriImageSource { Uri = new Uri($"{data["picture"]["data"]["url"]}") },
                 Email = data["email"].ToString()
             };
 
-
+            await HandleAuth();
 
             // await LoadPosts();
         }
@@ -246,7 +241,7 @@ namespace SerapisPatient.ViewModels
         private void LoginRequestAsync()
         {
 
-             HandleAuth();
+           HandleAuth();
         }
         /// <summary>
         /// <c a="HandleAuth"/>

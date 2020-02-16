@@ -99,7 +99,7 @@
                     PlaceholderColor="White"
                     VerticalOptions="End"
                     TextColor="White"
-                    Placeholder="E-Mail"
+                    Placeholder="Email"
                     Style="{StaticResource LoginEntryLabels}"
                     Text="{Binding Email, Mode=TwoWay}"
                     Margin="15,0,15,0"
@@ -118,7 +118,7 @@
                 </Grid.Margin>
 
                 <Entry 
-                    Placeholder="PASSWORD" 
+                    Placeholder="Password" 
                     PlaceholderColor="White"
                     TextColor="White"
                     VerticalOptions="End" 
