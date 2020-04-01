@@ -1,9 +1,12 @@
 ﻿using Rg.Plugins.Popup.Services;
 using SerapisPatient.Models;
+using SerapisPatient.Models.Local;
+using SerapisPatient.Services.Local;
 using SerapisPatient.Services.LocationServices;
 using SerapisPatient.TabbedPages;
 using SerapisPatient.ViewModels.Base;
 using SerapisPatient.Views.NotificationViews;
+using SQLite;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -18,10 +21,10 @@ namespace SerapisPatient.ViewModels
         #region Properties
         //The Title of the Page
         private readonly string _title = "Serapis Patient";
-
+        public SQLiteConnection conn;
         //public ICommand SettingsCommand => new Command(async () => await SettingsAsync());
 
-
+        public string firstName { get; set; }
         private NotificationBoardExpanded CardExpanded;
 
         public Command NavigateToProfilePageCommand { get; set; }
@@ -54,7 +57,7 @@ namespace SerapisPatient.ViewModels
 
         public MainViewModel()
         {
-
+            Init();
             GenerateNotificationList();
             NavigateToProfilePageCommand = new Command(ProfilePage);
             NavigateToAppointmentPageCommand = new Command(AppointmentPage);
@@ -67,6 +70,25 @@ namespace SerapisPatient.ViewModels
 
         }
 
+        public void Init()
+        {
+            IsBusy = false;
+            //Query and Load the data
+            conn = DependencyService.Get<Isqlite>().GetConnection();
+            var item = conn.Get<PatientStorage>(1);
+
+            PatientUser user = new PatientUser()
+            {
+              FirstName = item.FirstName,
+
+            };
+
+            //Bindings
+            
+            firstName = user.FirstName;
+            
+            IsBusy = false;
+        }
         private async void MockMethod()
         {
 

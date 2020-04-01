@@ -17,6 +17,7 @@
     <PackageReference Include="Plugin.GoogleClient" Version="1.1.1" />
     <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.1.4.168" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
     <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
     <PackageReference Include="Xam.Plugins.Forms.ImageCircle" Version="3.0.0.5" />
@@ -43,16 +44,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Cells\CellWithoutSubTitle.xaml">
+    <EmbeddedResource Update="Controls\Cells\CellWithoutSubTitle.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Cells\CellWithSubTitle.xaml">
+    <EmbeddedResource Update="Controls\Cells\CellWithSubTitle.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Cells\ChatBotUIX\IncomingViewCell.xaml">
+    <EmbeddedResource Update="Controls\Cells\ChatBotUIX\IncomingViewCell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Cells\ChatBotUIX\OutgoingViewCell.xaml">
+    <EmbeddedResource Update="Controls\Cells\ChatBotUIX\OutgoingViewCell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="PopUpMessages\AlertPopup.xaml">

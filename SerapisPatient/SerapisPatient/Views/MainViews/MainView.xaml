@@ -32,7 +32,7 @@
                     </Grid.RowDefinitions>
 
                     <Grid VerticalOptions="Center" Grid.Row="0">
-                        <Label Text="Hi Bonga" 
+                        <Label Text="{Binding firstName}" 
                                TextColor="Black" 
                                FontAttributes="Bold" 
                                FontSize="20"

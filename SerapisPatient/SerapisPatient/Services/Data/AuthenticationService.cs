@@ -42,7 +42,7 @@ namespace SerapisPatient.Services.Data
                     .PostAsync($"{APIURL}Account?SocialID={model.SocialId}&FirstName={model.FirstName}&LastName={model.LastName}&emailaddress={model.EmailAddress}"
                     , content);
 
-                Debug.WriteLine($"{APIURL}Account?SocialID={model.SocialId}&FirstName={model.FirstName}&LastName={model.LastName}&emailaddress={model.EmailAddress}");
+                //Debug.WriteLine($"{APIURL}Account?SocialID={model.SocialId}&FirstName={model.FirstName}&LastName={model.LastName}&emailaddress={model.EmailAddress}");
 
                 if (response.IsSuccessStatusCode)
                 {

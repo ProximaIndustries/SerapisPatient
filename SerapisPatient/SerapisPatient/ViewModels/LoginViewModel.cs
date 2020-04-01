@@ -17,6 +17,9 @@ using Plugin.FacebookClient;
 using Plugin.FacebookClient.Abstractions;
 using Newtonsoft.Json.Linq;
 using SerapisPatient.Services.Data;
+using SQLite;
+using SerapisPatient.Services.Local;
+using SerapisPatient.Models.Local;
 
 namespace SerapisPatient.ViewModels
 {
@@ -25,8 +28,10 @@ namespace SerapisPatient.ViewModels
 
         #region Properties
 
+        public SQLiteConnection conn;
         public string Token { get; set; }
         public bool IsLoggedIn { get; set; }
+        public PatientUser RegisteredUser;
 
         public ICommand RegisterOnClick { get; set; }
         public ICommand LoginOnClick { get; set; }
@@ -138,17 +143,38 @@ namespace SerapisPatient.ViewModels
 
         /// <summary>
         /// <c a="HandleAuth"/>
-        /// This handles the Navigation process, Removing the LoginView from thr stack and replacing it with the homepage/MasterView
-        /// 
+        ///1.Login in using FB 
+        ///2. If success we create a table and store user data for future logins and quick querying 
+        /// 3. Removing the LoginView from thr stack and replacing it with the homepage/MasterView 
         /// </summary>
-        private async Task HandleAuth(FacebookProfile profile)
+        public async Task HandleAuth(FacebookProfile profile)
         {
             IsBusy = true;
             try
             {
+                //Login via Facebook
+                RegisteredUser = await authenticationService.FacebookLogin(profile);    
+                conn = DependencyService.Get<Isqlite>().GetConnection();
+                conn.CreateTable<PatientStorage>();
+                
+                int Modified = 0;
+                PatientStorage storage = new PatientStorage()
+                {
+                    SocialID = RegisteredUser.SocialId,
+                    token = "Needs to be implemented",
+                    Email = RegisteredUser.EmailAddress,
+                    FirstName = RegisteredUser.FirstName,
+                    LastName = RegisteredUser.LastName
 
-                PatientUser user = await authenticationService.FacebookLogin(profile);
+                };
 
+                Modified = conn.Insert(storage);
+                if (Modified == 1)
+                {
+                    //successful
+                }
+                else{//unsuccesful
+                }
             }
             catch(Exception ex)
             {
@@ -156,7 +182,7 @@ namespace SerapisPatient.ViewModels
             }
             finally
             {
-
+               
                 App.Current.MainPage.Navigation.InsertPageBefore(new MasterView(), App.Current.MainPage.Navigation.NavigationStack.First() );
                 await App.Current.MainPage.Navigation.PopAsync();
 
